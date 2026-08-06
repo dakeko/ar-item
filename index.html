@@ -8,9 +8,26 @@
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
   <style>
     html, body { margin: 0; overflow: hidden; }
+    #start-button {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 999;
+      padding: 20px 40px;
+      font-size: 20px;
+      background: #333;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
+
+  <button id="start-button">タップしてARを開始</button>
+
   <a-scene mindar-image="imageTargetSrc: assets/targets.mind;"
            color-space="sRGB"
            renderer="colorManagement:true"
@@ -31,8 +48,8 @@
               id="card-target">
       <a-video id="ar-video"
                src="#video"
-               width="0.55"
-               height="1"
+               width="1"
+               height="1.8"
                position="0 0 0.001"></a-video>
     </a-entity>
 
@@ -41,6 +58,13 @@
   <script>
     const target = document.querySelector('#card-target');
     const video = document.querySelector('#video');
+    const btn = document.querySelector('#start-button');
+
+    // ボタンをタップしてからARスタート
+    btn.addEventListener('click', () => {
+      btn.style.display = 'none';
+      video.load();
+    });
 
     // 名刺を検出したら再生
     target.addEventListener('targetFound', () => {
